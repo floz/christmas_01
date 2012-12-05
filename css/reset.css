@@ -18,13 +18,15 @@ s, samp, section, small, span, source, strike, strong, sub, sup,
 table, tbody, tfoot, thead, th, tr, tdvideo, tt,
 u, ul, 
 var{
-    background: transparent;
+    background: #888;
     border: 0 none;
     font-size: 100%;
     margin: 0;
     padding: 0;
     text-decoration: none;
-    vertical-align: baseline; }
+    vertical-align: baseline; 
+    overflow: hidden;
+}
 
 li
 {

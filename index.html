@@ -7,14 +7,32 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="js/libs/three.js"></script>
-        <script src="js/main.js"></script>
+        <link rel="stylesheet" href="css/reset.css">
+        <style type="text/css">
+            /* set up a canvas container covering the entire window */
+            html {height: 100%}
+            body {height: inherit; margin: 0px;}
+            #container
+            {
+                width: 100%;
+                height: 100%;
+                margin: 0px;
+            }
+        </style>
+
     </head>
     <body>
-        
+        <div id="container"></div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="js/libs/Detector.js"></script>
+        <script src="js/libs/RequestFrameAnimation.js"></script>
+        <script src="js/libs/threejs/three.min.js"></script>
+        <script src="js/libs/threejs/libs/stats.min.js"></script>
+        <script src="js/libs/tweenlite/TweenLite.min.js"></script>
+
+        <script src="js/objects/Floor.js"></script>
+        <script src="js/objects/Sapin.js"></script>
+        <script src="js/main.js"></script>     
     </body>
 </html>
