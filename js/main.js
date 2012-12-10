@@ -18,7 +18,6 @@ $( document ).ready( function()	{
 		Detector.addGetWebGLMessage();
 		return;
 	}
-
 	var app = new Application();
 	app.init();
 
@@ -38,6 +37,7 @@ var Application = ( function()
 
 	Application.prototype.init = function init()
 	{
+		// Renderer
 		this.renderer = new THREE.WebGLRenderer({
 			  antialias: true
 			, preserveDrawingBuffer: true
@@ -50,17 +50,23 @@ var Application = ( function()
 		this.renderer.clear();
 		this.domContainer.append( this.renderer.domElement );
 
+		// Scene
 		this.scene = new THREE.Scene();
 
+		// Camera
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
+		this.camera.position.z = 300;
 		this.camera.position.y = 1;
-		//this.camera.position.z = 300;
-		this.camera.position.z = 200;
-		this.camera.lookAt( new THREE.Vector3( 0, 4, -20 ) );
 		this.scene.add( this.camera );
 
 		this.createLights();
 		this.createExperiment();
+
+		// Stats
+		this.stats = new Stats();
+		this.stats.domElement.style.position = "absolute";
+		this.stats.domElement.style.top = "0px";
+		container.appendChild( this.stats.domElement );
 
 		this.animate();
 	}
@@ -69,21 +75,24 @@ var Application = ( function()
 	{
 		this.pointLight = new THREE.PointLight( 0xffffff, 1.0 );
 		this.scene.add( this.pointLight );
-		/*var light1 = new THREE.DirectionalLight(0xffffff, 0.6); // color, intens. 
-		light1.position.set(-1, -1, 0.3); // SW directional light
-		var light2 = new THREE.PointLight(0xffffff, 0.6); // color, intens. 
-		light2.position.set(200, 200, 300); // NE point light
-		var light3 = new THREE.DirectionalLight(0xffffff, 0.5); // color, intens. 
-		light3.position.set(0, 0, 1); // frontal light
-		this.scene.add(light1); this.scene.add(light2); this.scene.add(light3); // add them all*/
+
+		var light = new THREE.DirectionalLight( 0xff00ff, 1.3 );
+		light.position.set( -100, 1, -100 );
+		this.scene.add( light );
+
+		light = new THREE.DirectionalLight( 0x0000ff, 0.1 );
+		light.position.set( 100, 50, -100 );
+		this.scene.add( light );
 	}
 
 	Application.prototype.createExperiment = function createExperiment()
 	{
-		this.scene.add( new Floor() );
-
-		var sphere = new THREE.Mesh( new THREE.SphereGeometry(50, 20, 20), new THREE.MeshBasicMaterial( { color: 0x0000ff } ) );
-		this.scene.add( sphere );
+		var floor = new Floor();
+		this.scene.add( floor );
+		var sapin = new Sapin();
+		sapin.position.z = 200;
+		this.scene.add( sapin );
+		console.log( "toto" );
 	}
 
 	Application.prototype.animate = function animate()
@@ -95,6 +104,9 @@ var Application = ( function()
 	Application.prototype.render = function render()
 	{
 		this.renderer.render( this.scene, this.camera );
+		//this.camera.position.z += 1;
+
+		this.stats.update();
 	}
 
 	return Application;
