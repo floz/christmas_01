@@ -1,47 +1,69 @@
 var SapinPart = ( function() {
 
-	function SapinPart()
+	function SapinPart( radius, height, steps )
 	{
 		THREE.Object3D.call( this );
 
+		this.radius = radius || 10;
+		this.height = height || 25;
+		this.steps = steps || 6;
+
 		this.createGeometry();
 		this.createObject();
-
-		requestAnimationFrame( this.test.bind( this ) );
 	}
 	SapinPart.prototype = new THREE.Object3D();
 	SapinPart.prototype.constructor = SapinPart;
 
 	SapinPart.prototype.createGeometry = function createGeometry()
 	{
-		var normal = new THREE.Vector3( 0, 0, 1 );
+		var prev, current, face,
+		i = 1,
+		n = this.steps + 1,
+		rad = 0,
+		stepRad = 2 * Math.PI / this.steps,
+		origin = new THREE.Vector3( 0, 0, 0 );
 
 		this.geometry = new THREE.Geometry();
-		this.geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );
-		this.geometry.vertices.push( new THREE.Vector3( 10, 0, 0 ) );
-		this.geometry.vertices.push( new THREE.Vector3( 10, 10, 0 ) );
-		this.geometry.vertices.push( new THREE.Vector3( 5, 5, 10 ) );
-		
-		this.geometry.faces.push( new THREE.Face3( 0, 1, 2 ) );
-		this.geometry.faces.push( new THREE.Face3( 1, 3, 2 ) );
-		this.geometry.faces.push( new THREE.Face3( 3, 0, 2 ) );
-
-		var face,
-		normal = new THREE.Vector3( 0, 0, 1 );
-		n = this.geometry.faces.length;
-		for( var i = 0; i < n; i++ )
+		this.geometry.vertices.push( origin );
+		for( ; i < n; i++ )
 		{
-			face = this.geometry.faces[ i ];
-			face.centroid.addSelf( this.geometry.vertices[ face.a ] );
-			face.centroid.addSelf( this.geometry.vertices[ face.b ] );
-			face.centroid.addSelf( this.geometry.vertices[ face.c ] );
-			face.normal = face.centroid.clone().normalize();
-		}
+			last = current;
+			current = new THREE.Vector3( this.radius * Math.cos( rad ), -this.height, this.radius * Math.sin( rad ) );
+			this.geometry.vertices.push( current );
+			rad += stepRad;
 
+			if( last != null )
+			{
+				console.log( i );
+				if( i < n - 1 )
+				{
+					var v2 = this.geometry.vertices[ i - 1 ];
+					var v3 = this.geometry.vertices[ i ];
+					this.addFace( new THREE.Face3( 0, i - 1, i ), [ origin.clone(), v2.clone(), v3.clone() ] );
+				}
+				else
+				{
+					this.addFace( new THREE.Face3( 0, i - 1, i ) );
+					this.addFace( new THREE.Face3( 0, i, 1 ) );
+				}				
+			}
+		}
 		this.geometry.computeBoundingSphere();
 		this.geometry.computeCentroids();
 		this.geometry.computeVertexNormals();
 		this.geometry.mergeVertices();
+
+		this.geometry.boundingSphere = { radius: this.radius };
+	}
+
+	SapinPart.prototype.addFace = function addFace( face )
+	{
+		face.centroid.addSelf( this.geometry.vertices[ face.a ] );
+		face.centroid.addSelf( this.geometry.vertices[ face.b ] );
+		face.centroid.addSelf( this.geometry.vertices[ face.c ] );
+		//face.centroid.divideScalar( 3 );
+		face.normal = face.centroid.clone().normalize();
+		this.geometry.faces.push( face );
 	}
 
 	SapinPart.prototype.createObject = function createObject()
@@ -49,16 +71,7 @@ var SapinPart = ( function() {
 		var material = new THREE.MeshLambertMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors, shading: THREE.FlatShading } );
 
 		this.mesh = new THREE.Mesh( this.geometry, material );
-		this.mesh.rotation.y = Math.PI * .25;
-		this.mesh.rotation.x = Math.PI * .25;
 		this.add( this.mesh );
-	}
-
-	SapinPart.prototype.test = function test()
-	{
-		this.mesh.rotation.x += Math.PI / 200;
-		this.mesh.rotation.y += Math.PI / 200;
-		requestAnimationFrame( this.test.bind( this ) );
 	}
 
 	return SapinPart;

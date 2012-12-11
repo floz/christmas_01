@@ -54,9 +54,11 @@ var Application = ( function()
 		this.scene = new THREE.Scene();
 
 		// Camera
-		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
+		this.camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 1000 );
 		this.camera.position.z = 300;
 		this.camera.position.y = 1;
+		//this.camera.lookAt( new THREE.Vector3( 0, 0, 200 ) );
+		//camera.position.set( 0, 0, 250 );
 		this.scene.add( this.camera );
 
 		this.createLights();
@@ -74,6 +76,8 @@ var Application = ( function()
 	Application.prototype.createLights = function createLights()
 	{
 		this.pointLight = new THREE.PointLight( 0xffffff, 1.0 );
+		this.pointLight.y = 500;
+		this.pointLight.z = -200;
 		this.scene.add( this.pointLight );
 
 		var light = new THREE.DirectionalLight( 0xff00ff, 1.3 );
@@ -88,11 +92,14 @@ var Application = ( function()
 	Application.prototype.createExperiment = function createExperiment()
 	{
 		var floor = new Floor();
+		floor.position.y = -50;
+		floor.position.z = -500;
 		this.scene.add( floor );
-		var sapin = new Sapin();
-		sapin.position.z = 200;
-		this.scene.add( sapin );
-		console.log( "toto" );
+
+		this.sapin = new Sapin();
+		this.sapin.position.z = -100;
+		this.sapin.position.y = 50;
+		this.scene.add( this.sapin );
 	}
 
 	Application.prototype.animate = function animate()
@@ -105,6 +112,15 @@ var Application = ( function()
 	{
 		this.renderer.render( this.scene, this.camera );
 		//this.camera.position.z += 1;
+		//this.scene.rotation.y += 0.01;
+
+		/*var timer = Date.now() * 0.0005;
+		this.camera.position.x = Math.cos( timer ) * 50;
+		this.camera.position.y = 2;
+		this.camera.position.z = Math.sin( timer ) * 50;
+		this.camera.lookAt( this.sapin.position );*/
+
+		this.sapin.render();
 
 		this.stats.update();
 	}
