@@ -94,6 +94,8 @@ var Application = ( function()
 		var loader = new LoaderSapin();
 		loader.signalLoaded.add( this.onSapinLoaded, this );
 		loader.load();
+
+		var svg = new SVGReader();
 	}
 
 	Application.prototype.onSapinLoaded = function onSapinLoaded( obj )
