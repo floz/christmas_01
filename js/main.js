@@ -55,7 +55,7 @@ var Application = ( function()
 
 		// Camera
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-		this.camera.position.z = 300;
+		this.camera.position.z = 100;
 		this.camera.position.y = 1;
 		this.scene.add( this.camera );
 
@@ -74,6 +74,7 @@ var Application = ( function()
 	Application.prototype.createLights = function createLights()
 	{
 		this.pointLight = new THREE.PointLight( 0xffffff, 1.0 );
+		this.pointLight.position.z = 30;
 		this.scene.add( this.pointLight );
 
 		var light = new THREE.DirectionalLight( 0xff00ff, 1.3 );
@@ -89,10 +90,20 @@ var Application = ( function()
 	{
 		var floor = new Floor();
 		this.scene.add( floor );
-		var sapin = new Sapin();
-		sapin.position.z = 200;
-		this.scene.add( sapin );
-		console.log( "toto" );
+
+		var loader = new LoaderSapin();
+		loader.signalLoaded.add( this.onSapinLoaded, this );
+		loader.load();
+	}
+
+	Application.prototype.onSapinLoaded = function onSapinLoaded( obj )
+	{
+		var material = new THREE.MeshLambertMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors, shading: THREE.FlatShading } );
+		obj.children[ 0 ].material = material;
+		console.log( obj.children[ 0 ] );
+		obj.position.y = 20;
+		this.scene.add( obj );
+		this.obj = obj;
 	}
 
 	Application.prototype.animate = function animate()
@@ -105,6 +116,8 @@ var Application = ( function()
 	{
 		this.renderer.render( this.scene, this.camera );
 		//this.camera.position.z += 1;
+		if( this.obj != null )
+			this.obj.rotation.y += 0.01;
 
 		this.stats.update();
 	}
