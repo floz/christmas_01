@@ -37,6 +37,11 @@ var Application = ( function()
 
 	Application.prototype.init = function init()
 	{
+		this.timeOnPath = 0;
+		this.speed = 0.025;
+		this.acc = 0.001;
+		this.speedMax = 0.1;
+
 		// Renderer
 		this.renderer = new THREE.WebGLRenderer({
 			  antialias: true
@@ -55,8 +60,9 @@ var Application = ( function()
 
 		// Camera
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-		this.camera.position.z = 300;
-		this.camera.position.y = 1;
+		this.camera.position.z = 500;
+		this.camera.position.y = 550;
+		this.camera.rotation.x = -Math.PI * .4;
 		this.scene.add( this.camera );
 
 		this.createLights();
@@ -74,6 +80,7 @@ var Application = ( function()
 	Application.prototype.createLights = function createLights()
 	{
 		this.pointLight = new THREE.PointLight( 0xffffff, 1.0 );
+		this.pointLight.position.z = 30;
 		this.scene.add( this.pointLight );
 
 		var light = new THREE.DirectionalLight( 0xff00ff, 1.3 );
@@ -87,12 +94,44 @@ var Application = ( function()
 
 	Application.prototype.createExperiment = function createExperiment()
 	{
-		var floor = new Floor();
-		this.scene.add( floor );
-		var sapin = new Sapin();
-		sapin.position.z = 200;
-		this.scene.add( sapin );
-		console.log( "toto" );
+		this.svgReader = new SVGReader();
+		this.svgReader.parse();
+
+		this.createFloor();
+		this.createObjects();
+		this.createPath();
+	}
+
+	Application.prototype.createFloor = function createFloor()
+	{
+		this.floor = new Floor();
+		this.scene.add( this.floor );
+	}
+
+	Application.prototype.createObjects = function createObjects()
+	{
+		this.star = new Star();
+		this.scene.add( this.star );
+
+		this.line = new Line();
+		this.scene.add( this.line );
+	}
+
+	Application.prototype.createPath = function createPath()
+	{
+		this.path = new THREE.Shape();
+		var dataPath = this.svgReader.data[ "path" ];
+		for( var i = 0; i < dataPath.length; i++ )
+		{
+			if( dataPath[ i ].cmd == "M" )
+			{
+				this.path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
+			}
+			else
+			{
+				this.path.bezierCurveTo( dataPath[ i ].cp0.x, dataPath[ i ].cp0.y, dataPath[ i ].cp1.x, dataPath[ i ].cp1.y, dataPath[ i ].p.x, dataPath[ i ].p.y );
+			}
+		}
 	}
 
 	Application.prototype.animate = function animate()
@@ -104,7 +143,19 @@ var Application = ( function()
 	Application.prototype.render = function render()
 	{
 		this.renderer.render( this.scene, this.camera );
-		//this.camera.position.z += 1;
+		
+		if( this.speed < this.speedMax )
+		{
+			this.speed += this.acc;
+		}
+
+		this.timeOnPath += this.speed * Globals.clock.getDelta();
+		if( this.timeOnPath > 1 )
+			return;
+
+		var p = this.path.getPointAt( this.timeOnPath );
+		this.star.render( p );
+		this.line.render( p );
 
 		this.stats.update();
 	}
