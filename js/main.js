@@ -37,6 +37,11 @@ var Application = ( function()
 
 	Application.prototype.init = function init()
 	{
+		this.timeOnPath = 0;
+		this.speed = 0.025;
+		this.acc = 0.001;
+		this.speedMax = 0.1;
+
 		// Renderer
 		this.renderer = new THREE.WebGLRenderer({
 			  antialias: true
@@ -55,8 +60,9 @@ var Application = ( function()
 
 		// Camera
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-		this.camera.position.z = 100;
-		this.camera.position.y = 1;
+		this.camera.position.z = 500;
+		this.camera.position.y = 550;
+		this.camera.rotation.x = -Math.PI * .4;
 		this.scene.add( this.camera );
 
 		this.createLights();
@@ -88,24 +94,44 @@ var Application = ( function()
 
 	Application.prototype.createExperiment = function createExperiment()
 	{
-		var floor = new Floor();
-		this.scene.add( floor );
+		this.svgReader = new SVGReader();
+		this.svgReader.parse();
 
-		var loader = new LoaderSapin();
-		loader.signalLoaded.add( this.onSapinLoaded, this );
-		loader.load();
-
-		var svg = new SVGReader();
+		this.createFloor();
+		this.createObjects();
+		this.createPath();
 	}
 
-	Application.prototype.onSapinLoaded = function onSapinLoaded( obj )
+	Application.prototype.createFloor = function createFloor()
 	{
-		var material = new THREE.MeshLambertMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors, shading: THREE.FlatShading } );
-		obj.children[ 0 ].material = material;
-		console.log( obj.children[ 0 ] );
-		obj.position.y = 20;
-		this.scene.add( obj );
-		this.obj = obj;
+		this.floor = new Floor();
+		this.scene.add( this.floor );
+	}
+
+	Application.prototype.createObjects = function createObjects()
+	{
+		this.star = new Star();
+		this.scene.add( this.star );
+
+		this.line = new Line();
+		this.scene.add( this.line );
+	}
+
+	Application.prototype.createPath = function createPath()
+	{
+		this.path = new THREE.Shape();
+		var dataPath = this.svgReader.data[ "path" ];
+		for( var i = 0; i < dataPath.length; i++ )
+		{
+			if( dataPath[ i ].cmd == "M" )
+			{
+				this.path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
+			}
+			else
+			{
+				this.path.bezierCurveTo( dataPath[ i ].cp0.x, dataPath[ i ].cp0.y, dataPath[ i ].cp1.x, dataPath[ i ].cp1.y, dataPath[ i ].p.x, dataPath[ i ].p.y );
+			}
+		}
 	}
 
 	Application.prototype.animate = function animate()
@@ -117,9 +143,19 @@ var Application = ( function()
 	Application.prototype.render = function render()
 	{
 		this.renderer.render( this.scene, this.camera );
-		//this.camera.position.z += 1;
-		if( this.obj != null )
-			this.obj.rotation.y += 0.01;
+		
+		if( this.speed < this.speedMax )
+		{
+			this.speed += this.acc;
+		}
+
+		this.timeOnPath += this.speed * Globals.clock.getDelta();
+		if( this.timeOnPath > 1 )
+			return;
+
+		var p = this.path.getPointAt( this.timeOnPath );
+		this.star.render( p );
+		this.line.render( p );
 
 		this.stats.update();
 	}
