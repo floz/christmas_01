@@ -38,8 +38,8 @@ var Application = ( function()
 	Application.prototype.init = function init()
 	{
 		this.timeOnPath = 0;
-		this.speed = 0.025;
-		this.acc = 0.001;
+		this.speed = 0.0025;
+		this.acc = 0.00005;
 		this.speedMax = 0.1;
 
 		// Renderer
@@ -60,10 +60,10 @@ var Application = ( function()
 
 		// Camera
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-		this.camera.position.z = 500;
-		this.camera.position.y = 550;
-		this.camera.rotation.x = -Math.PI * .4;
-		this.scene.add( this.camera );
+		this.camera.position.z = -60;
+		this.camera.position.y = 30;
+		this.camera.rotation.x = -Math.PI * .1;
+		//this.scene.add( this.camera );
 
 		this.createLights();
 		this.createExperiment();
@@ -112,6 +112,8 @@ var Application = ( function()
 	{
 		this.star = new Star();
 		this.scene.add( this.star );
+		this.star.add( this.camera );
+		this.camera.lookAt( this.star.position );
 
 		this.line = new Line();
 		this.scene.add( this.line );
@@ -153,9 +155,24 @@ var Application = ( function()
 		if( this.timeOnPath > 1 )
 			return;
 
+
+		console.log( this.star.quaternion );
+
 		var p = this.path.getPointAt( this.timeOnPath );
 		this.star.render( p );
 		this.line.render( p );
+
+		/*var offset = this.star.matrixWorld.multiplyVector3( new THREE.Vector3(0,50,100) );
+		console.log( offset );
+		
+		this.camera.position.x = offset.x;
+		this.camera.position.y = offset.y;
+		this.camera.position.z = offset.y;
+
+		this.camera.position.x = this.star.position.x;
+		this.camera.position.y = this.star.position.y + 30;
+		this.camera.position.z = this.star.position.z - 100;
+		this.camera.lookAt( this.star.position );*/
 
 		this.stats.update();
 	}
