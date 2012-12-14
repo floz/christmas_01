@@ -117,6 +117,9 @@ var Application = ( function()
 
 		this.line = new Line();
 		this.scene.add( this.line );
+
+		this.ribbons = new Ribbons( this.star );
+		this.scene.add( this.ribbons );
 	}
 
 	Application.prototype.createPath = function createPath()
@@ -155,12 +158,10 @@ var Application = ( function()
 		if( this.timeOnPath > 1 )
 			return;
 
-
-		console.log( this.star.quaternion );
-
 		var p = this.path.getPointAt( this.timeOnPath );
 		this.star.render( p );
 		this.line.render( p );
+		this.ribbons.render( p );
 
 		/*var offset = this.star.matrixWorld.multiplyVector3( new THREE.Vector3(0,50,100) );
 		console.log( offset );
