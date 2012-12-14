@@ -24,14 +24,19 @@ SVGReader = ( function() {
 			{
 				switch( node.nodeName )
 				{
-					case "g": this.data[ node.attributes[ 0 ].nodeValue ] = this._parseGraphicNode( node ); break;
+					case "g": 
+						if( node.attributes[ 0 ].nodeValue == "path" )
+							this.data[ "path" ] = this._parsePathNode( node ); 
+						else if( node.attributes[ 0 ].nodeValue == "decors" )
+							this.data[ "decors" ] = this._parseDecorsNode( node );
+						break;
 					default: console.log( "No default behavior for " + node.nodeName + " !" ); break;
 				}
 			}
 		}
 	}
 
-	SVGReader.prototype._parseGraphicNode = function _parseGraphicNode( nodeG )
+	SVGReader.prototype._parsePathNode = function _parsePathNode( nodeG )
 	{
 		var j, m, node, cmd, ref, chara, idxEnd
 		  ,	aPath = []
@@ -100,16 +105,26 @@ SVGReader = ( function() {
             console.log( aPath );
 		}
 		return aPath;
-		/*path = "M191.667,381.667C191.667,381.667,198.667,362.33399999999995,187.334,358.667C187.334,358.667,159.001,347.33399999999995,134.667,397.33399999999995C134.667,397.33399999999995,118.667,428.99999999999994,140,436.99999999999994C140,436.99999999999994,161.667,442.33299999999997,202,431.99999999999994";
-		path = path.replace(/,/gm,' '); // get rid of all commas
-        path = path.replace(/([MmZzLlHhVvCcSsQqTtAa])([MmZzLlHhVvCcSsQqTtAa])/gm,'$1 $2'); // separate commands from commands
-        path = path.replace(/([MmZzLlHhVvCcSsQqTtAa])([MmZzLlHhVvCcSsQqTtAa])/gm,'$1 $2'); // separate commands from commands
-        path = path.replace(/([MmZzLlHhVvCcSsQqTtAa])([^\s])/gm,'$1 $2'); // separate commands from points
-        path = path.replace(/([^\s])([MmZzLlHhVvCcSsQqTtAa])/gm,'$1 $2'); // separate commands from points
-        path = path.replace(/([0-9])([+\-])/gm,'$1 $2'); // separate digits when no comma
-        path = path.replace(/(\.[0-9]*)(\.)/gm,'$1 $2'); // separate digits when no comma
-        path = path.replace(/([Aa](\s+[0-9]+){3})\s+([01])\s*([01])/gm,'$1 $3 $4 '); // shorthand elliptical arc path syntax
-		console.log( "path", path );*/
+	}
+
+	SVGReader.prototype._parseDecorsNode = function _parseDecorsNode( nodeG )
+	{
+		var node
+		  , data = []
+		  , i = 0
+		  , n = nodeG.childNodes.length;
+		for( ; i < n; i++ )
+		{
+			node = nodeG.childNodes[ i ];
+			if( node.nodeName == "#text" )
+				continue;
+
+			var entry = { x: node.attributes[ "cx" ].nodeValue
+						, y: node.attributes[ "cy" ].nodeValue
+						, r: node.attributes[ "r" ].nodeValue };
+			data.push( entry );
+		}
+		return data;
 	}
 
 	return SVGReader;
