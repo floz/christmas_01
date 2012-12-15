@@ -6,6 +6,9 @@ Star = ( function Star() {
 
 		this.mesh = Globals.objs.star;
 		this.mesh.rotation.x = -1.3;
+		this.mesh.scale.x =
+		this.mesh.scale.y =
+		this.mesh.scale.z = .7;
 		this.add( this.mesh );
 
 		var geoX = new THREE.Geometry();
@@ -22,6 +25,8 @@ Star = ( function Star() {
 		this.add( new THREE.Line( geoX, matX ) );
 		this.add( new THREE.Line( geoY, matY ) );
 		this.add( new THREE.Line( geoZ, matZ ) );
+
+		this.rotation.y = Math.PI;
 	}
 	Star.prototype = new THREE.Object3D();
 	Star.prototype.constructor = new THREE.Object3D();
@@ -37,10 +42,12 @@ Star = ( function Star() {
 
 		var nry = -rad + Math.PI * .5;
 		//this.mesh.rotation.z += ( nry - this.mesh.rotation.z ) * .1;		
-		this.rotation.y += ( nry - this.rotation.y ) * .1;		
+		this.rotation.y += ( nry - this.rotation.y ) * .1;
+		console.log( this.rotation.y );
 		
 		this.position.x = p.x;
 		this.position.z = p.y;
+		this.position.y += ( ( U3D.getY( this.position ) + 5 ) - this.position.y ) * .1;
 	}
 
 	return Star;

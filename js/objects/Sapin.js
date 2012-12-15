@@ -15,6 +15,10 @@ Sapin = ( function Sapin() {
 			this.scale.z = s;
 		}
 		this.add( this.mesh );
+
+		//var idx = ( this.position.x + this.position.z ) * .1 >> 0;
+		//console.log( idx );
+		this.position.y = U3D.getY( this.position );
 	}
 	Sapin.prototype = new THREE.Object3D();
 	Sapin.prototype.construtor = Sapin;

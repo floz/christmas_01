@@ -5,6 +5,7 @@ Ribbons = ( function Ribbons() {
 		THREE.Object3D.call( this );
 
 		this.target = target;
+		console.log( this.target );
 
 		this.ribbons = [];
 		var data = [ { x: 0, y: 0, z: 0, color: 0xFFFF00, opacity: 1, radius: 1 }
@@ -28,6 +29,8 @@ Ribbons = ( function Ribbons() {
 
 	Ribbons.prototype.render = function render( p )
 	{
+		this.position.y = this.target.position.y;
+		
 		var n = this.ribbons.length;
 		for( var i = 0; i < n; i++ )
 		{

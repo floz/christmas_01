@@ -69,10 +69,10 @@ var Application = ( function()
 		this.scene = new THREE.Scene();
 
 		// Camera
-		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 250 );
+		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 25000 );
 		this.camera.position.z = -60;
 		this.camera.position.y = 30;
-		this.camera.rotation.x = -Math.PI * .1;
+		//this.camera.rotation.x = -Math.PI * .1;
 		//this.scene.add( this.camera );
 
 		this.createLights();
@@ -114,7 +114,7 @@ var Application = ( function()
 
 	Application.prototype.createFloor = function createFloor()
 	{
-		this.floor = new Floor();
+		this.floor = new Floor( this.svgReader.data[ "zone" ] );
 		this.scene.add( this.floor );
 	}
 
@@ -127,6 +127,8 @@ var Application = ( function()
 		this.scene.add( this.star );
 		this.star.add( this.camera );
 		this.camera.lookAt( this.star.position );
+		//this.camera.position.y = 200;
+		//this.camera.rotation.x = -Math.PI * .5;
 
 		this.line = new Line();
 		this.scene.add( this.line );
@@ -146,6 +148,8 @@ var Application = ( function()
 				this.path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
 				this.star.position.x = dataPath[ i ].p.x;
 				this.star.position.z = dataPath[ i ].p.y;
+				this.star.position.y = U3D.getY( this.star.position );
+				console.log( dataPath[ i ].p.x, dataPath[ i ].p.y );
 			}
 			else
 			{
@@ -177,6 +181,8 @@ var Application = ( function()
 		this.star.render( p );
 		this.line.render( p );
 		this.ribbons.render( p );
+
+		//this.star.rotation.y += .01;
 
 		/*var offset = this.star.matrixWorld.multiplyVector3( new THREE.Vector3(0,50,100) );
 		console.log( offset );

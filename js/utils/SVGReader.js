@@ -29,6 +29,8 @@ SVGReader = ( function() {
 							this.data[ "path" ] = this._parsePathNode( node ); 
 						else if( node.attributes[ 0 ].nodeValue == "decors" )
 							this.data[ "decors" ] = this._parseDecorsNode( node );
+						else if( node.attributes[ 0 ].nodeValue == "zone" )
+							this.data[ "zone" ] = this._parseZoneNode( node );
 						break;
 					default: console.log( "No default behavior for " + node.nodeName + " !" ); break;
 				}
@@ -79,7 +81,7 @@ SVGReader = ( function() {
             		switch( cmd[ 0 ] )
             		{
             			case "M": cmd = { cmd: "M"
-            							, p: { x: 0, y: 0 } };//p: { x: parseFloat( cmd[ 1 ] ), y: parseFloat( cmd[ 2 ] ) } };
+            							, p: { x: parseFloat( cmd[ 1 ] ), y: parseFloat( cmd[ 2 ] ) } };
             					break;
             			case "C":
             			case "c": 
@@ -119,12 +121,23 @@ SVGReader = ( function() {
 			if( node.nodeName == "#text" )
 				continue;
 
-			var entry = { x: node.attributes[ "cx" ].nodeValue
-						, y: node.attributes[ "cy" ].nodeValue
-						, r: node.attributes[ "r" ].nodeValue 
+			var entry = { x: parseFloat( node.attributes[ "cx" ].nodeValue )
+						, y: parseFloat( node.attributes[ "cy" ].nodeValue )
+						, r: parseFloat( node.attributes[ "r" ].nodeValue )
 						, c: node.attributes[ "fill"].nodeValue };
 			data.push( entry );
 		}
+		return data;
+	}
+
+	SVGReader.prototype._parseZoneNode = function _parseZoneNode( nodeG )
+	{
+		var node = nodeG.childNodes[ 1 ];
+		var data = { x: parseFloat( node.attributes[ "x" ].nodeValue )
+				   , y: parseFloat( node.attributes[ "y" ].nodeValue )
+				   , w: parseFloat( node.attributes[ "width" ].nodeValue )
+				   , h: parseFloat( node.attributes[ "height" ].nodeValue )
+			};
 		return data;
 	}
 
