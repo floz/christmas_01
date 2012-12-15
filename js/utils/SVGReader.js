@@ -121,7 +121,8 @@ SVGReader = ( function() {
 
 			var entry = { x: node.attributes[ "cx" ].nodeValue
 						, y: node.attributes[ "cy" ].nodeValue
-						, r: node.attributes[ "r" ].nodeValue };
+						, r: node.attributes[ "r" ].nodeValue 
+						, c: node.attributes[ "fill"].nodeValue };
 			data.push( entry );
 		}
 		return data;

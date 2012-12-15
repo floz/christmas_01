@@ -45,10 +45,13 @@ ProjectLoader = ( function ProjectLoader() {
 		}
 		else if ( this.currentLoader.id == "sapb" )
 		{
-			U3D.scale( .1, geometry );
-			Globals.objs[ "sapbig" ] = new THREE.Mesh( geometry, mesh.material );
+			var o3d = new THREE.Object3D();
+			var geo = geometry.clone();
+			U3D.scale( 0.1, geo );
+			o3d.add( new THREE.Mesh( geo, mesh.material ) );
+			Globals.objs[ "sapbig" ] = o3d;
 
-			U3D.scale( .15, geometry );
+			U3D.scale( .01, geometry );
 		}
 		else if ( this.currentLoader.id == "saps3" )
 		{
@@ -56,9 +59,7 @@ ProjectLoader = ( function ProjectLoader() {
 
 			n = geometry.vertices.length;
 			for( var i = 0; i < n; i++ ) 
-			{
 				geometry.vertices[ i ].addSelf( v );
-			}	
 		}
 		Globals.objs[ this.currentLoader.id ] = obj;
 

@@ -4,12 +4,19 @@ Decors = ( function Decors(){
 	{
 		THREE.Object3D.call( this );
 
+		var map = {};
+		map[ "#FF0000" ] = "saps1";
+		map[ "#0000FF" ] = "saps2";
+		map[ "#FFFF00" ] = "saps3";
+		map[ "#00FF00" ] = "sapb";
+		map[ "#FF00FF" ] = "sapbig";
+
 		var sapin
-		  , sapIds = [ "saps1", "saps2","saps3", "sapb" ]
 		  , n = data.length;
 		for( var i = 0; i < n; i++ )
 		{
-			sapin = new Sapin( Globals.objs[ sapIds[ Math.random() * sapIds.length >> 0 ] ].children[ 0 ], data[ i ] );
+			console.log( data[ i ].c );
+			sapin = new Sapin( Globals.objs[ map[ data[ i ].c ] ].children[ 0 ], data[ i ] );
 			this.add( sapin );
 		}
 	}

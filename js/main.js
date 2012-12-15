@@ -50,7 +50,7 @@ var Application = ( function()
 		this.timeOnPath = 0;
 		this.speed = 0.0025;
 		this.acc = 0.00005;
-		this.speedMax = 0.1;
+		this.speedMax = 0.06;
 
 		// Renderer
 		this.renderer = new THREE.WebGLRenderer({
