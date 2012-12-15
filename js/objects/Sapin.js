@@ -4,10 +4,16 @@ Sapin = ( function Sapin() {
 	{	
 		THREE.Object3D.call( this );
 
-		console.log( objData, data );
+		var s = data.r * .1;
 		this.mesh = objData.clone();
 		this.position.x = data.x;
 		this.position.z = data.y;
+		if( data.c != "#FF00FF")
+		{
+			this.scale.x = s;
+			this.scale.y = s;
+			this.scale.z = s;
+		}
 		this.add( this.mesh );
 	}
 	Sapin.prototype = new THREE.Object3D();

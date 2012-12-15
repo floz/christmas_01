@@ -9,11 +9,11 @@ Star = ( function Star() {
 		this.add( this.mesh );
 
 		var geoX = new THREE.Geometry();
-		geoX.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 30, 0, 0 ) );
+		geoX.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 15, 0, 0 ) );
 		var geoY = new THREE.Geometry();
-		geoY.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 30, 0 ) );
+		geoY.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 15, 0 ) );
 		var geoZ = new THREE.Geometry();
-		geoZ.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 30 ) );
+		geoZ.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 15 ) );
 
 		var matX = new THREE.LineBasicMaterial( { color: 0x0000ff, opacity: 1, linewidth: 2 } );
 		var matY = new THREE.LineBasicMaterial( { color: 0x00ff00, opacity: 1, linewidth: 2 } );
