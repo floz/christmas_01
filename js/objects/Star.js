@@ -4,16 +4,7 @@ Star = ( function Star() {
 	{
 		THREE.Object3D.call( this );
 
-		var loaderStar = new ObjLoader( "./obj/star.obj" );
-		loaderStar.signalLoaded.add( this.onStarLoaded, this );
-		loaderStar.load();
-	}
-	Star.prototype = new THREE.Object3D();
-	Star.prototype.constructor = new THREE.Object3D();
-
-	Star.prototype.onStarLoaded = function onStarLoaded( obj )
-	{
-		this.mesh = obj.children[ 0 ];
+		this.mesh = Globals.objs.star;
 		this.mesh.rotation.x = -1.3;
 		this.add( this.mesh );
 
@@ -32,6 +23,8 @@ Star = ( function Star() {
 		this.add( new THREE.Line( geoY, matY ) );
 		this.add( new THREE.Line( geoZ, matZ ) );
 	}
+	Star.prototype = new THREE.Object3D();
+	Star.prototype.constructor = new THREE.Object3D();
 
 	Star.prototype.render = function render( p )
 	{

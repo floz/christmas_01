@@ -26,7 +26,7 @@ Line = ( function Line() {
 		var geometry = new THREE.Geometry();
 		geometry.vertices.push( this.geometry.vertices[ this.geometry.vertices.length - 1 ], v );
 		var line = new THREE.Line( geometry, this.material );
-		this.add( line );
+		//this.add( line );
 
 		this.geometry.vertices.push( v );
 	}

@@ -4,44 +4,42 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1024px"
 	 height="768px" viewBox="0 0 1024 768" enable-background="new 0 0 1024 768" xml:space="preserve">
 <g id="Calque_1">
-	<path fill="none" d="M-547.796-27.489c282.593-294.154,749.29-303.509,1043.444-20.916"/>
-	<text transform="matrix(0.8763 -0.4817 0.4817 0.8763 -417.752 -137.5913)"><tspan x="0" y="0" font-family="'Handwriting-Dakota'" font-size="120">M</tspan><tspan x="104.879" y="1.009" font-family="'Handwriting-Dakota'" font-size="120" rotate="6.654">E</tspan><tspan x="170.25" y="7.968" font-family="'Handwriting-Dakota'" font-size="120" rotate="12.607">R</tspan><tspan x="255.083" y="26.801" font-family="'Handwriting-Dakota'" font-size="120" rotate="19.343">R</tspan><tspan x="337.179" y="56.176" font-family="'Handwriting-Dakota'" font-size="120" rotate="25.119">Y</tspan><tspan x="393.931" y="83.002" font-family="'Handwriting-Dakota'" font-size="120" rotate="29.444"> </tspan><tspan x="436.958" y="106.681" font-family="'Handwriting-Dakota'" font-size="120" rotate="34.114">X</tspan><tspan x="496.469" y="145.606" font-family="'Handwriting-Dakota'" font-size="120" rotate="40.924">M</tspan><tspan x="575.25" y="214.541" font-family="'Handwriting-Dakota'" font-size="120" rotate="48.28">A</tspan><tspan x="631.711" y="277.665" font-family="'Handwriting-Dakota'" font-size="120" rotate="54.893">S</tspan><tspan x="680.037" y="347.697" font-family="'Handwriting-Dakota'" font-size="120" rotate="60.126"> </tspan><tspan x="704.752" y="390.334" font-family="'Handwriting-Dakota'" font-size="120" rotate="64.269">!</tspan></text>
+	<path fill="none" d="M-133.796,141.511c282.593-294.154,749.29-303.509,1043.444-20.916"/>
+	<text transform="matrix(0.8763 -0.4817 0.4817 0.8763 -3.752 31.4087)"><tspan x="0" y="0" font-family="'Handwriting-Dakota'" font-size="120">M</tspan><tspan x="104.879" y="1.009" font-family="'Handwriting-Dakota'" font-size="120" rotate="6.654">E</tspan><tspan x="170.25" y="7.968" font-family="'Handwriting-Dakota'" font-size="120" rotate="12.607">R</tspan><tspan x="255.083" y="26.801" font-family="'Handwriting-Dakota'" font-size="120" rotate="19.343">R</tspan><tspan x="337.179" y="56.176" font-family="'Handwriting-Dakota'" font-size="120" rotate="25.119">Y</tspan><tspan x="393.931" y="83.002" font-family="'Handwriting-Dakota'" font-size="120" rotate="29.444"> </tspan><tspan x="436.958" y="106.681" font-family="'Handwriting-Dakota'" font-size="120" rotate="34.114">X</tspan><tspan x="496.469" y="145.606" font-family="'Handwriting-Dakota'" font-size="120" rotate="40.924">M</tspan><tspan x="575.25" y="214.541" font-family="'Handwriting-Dakota'" font-size="120" rotate="48.28">A</tspan><tspan x="631.711" y="277.665" font-family="'Handwriting-Dakota'" font-size="120" rotate="54.893">S</tspan><tspan x="680.036" y="347.697" font-family="'Handwriting-Dakota'" font-size="120" rotate="60.126"> </tspan><tspan x="704.752" y="390.334" font-family="'Handwriting-Dakota'" font-size="120" rotate="64.269">!</tspan></text>
 </g>
 <g id="path">
-	<path fill="none" stroke="#00FF00" stroke-miterlimit="10" d="M-409-48.316c-8-76.684,1.307-145.458,2-160.559
-		c0.094-2.058,0.524-3.999,0.524-3.999s6.329-36.169,53.165-41.502c0,0,39.24-6.599,51.898,9.857c0,0,32.912,28.387,56.962-9.857
-		c0,0,82.278-99.004,163.291-63.561c0,0,70.886,59.494,150.633,32.912c0,0,67.089-29.114,83.544-6.329
-		c0,0,5.063,20.253,21.519,26.582c0,0,56.962,3.798,96.203-17.721c0,0,59.494-18.987,10.126,78.481c0,0,6.33,60.759,127.848,1.266
-		c0,0,165.382-39.566,9.906,89.71"/>
+	<path fill="none" stroke="#00FF00" stroke-miterlimit="10" d="M8,88C8,88-50-54,60-80c0,0,26-7,80,17c0,0,46,12,82-58
+		c0,0,19-36.2,75-35.6c0,0,34,0.6,73,30.6c0,0,63.929,48.071,168,5c0,0,47.267-9.727,68,31c0,0,22,25,80-10c0,0,40-24,77,71
+		c0,0,12,39,68,6c0,0,85.412-42,58.206,23c0,0-7.007,17.975-47.106,62.987"/>
 </g>
 <g id="decors">
-	<circle fill="#0000FF" cx="-401" cy="-249" r="10"/>
-	<circle fill="#0000FF" cx="-364" cy="-222" r="10"/>
-	<circle fill="#0000FF" cx="-396" cy="-202" r="10"/>
-	<circle fill="#0000FF" cx="-338" cy="-269" r="10"/>
-	<circle fill="#0000FF" cx="-328" cy="-182" r="10"/>
-	<circle fill="#0000FF" cx="-284" cy="-254" r="10"/>
-	<circle fill="#0000FF" cx="-294" cy="-326" r="10"/>
-	<circle fill="#0000FF" cx="-274" cy="-192" r="10"/>
-	<circle fill="#0000FF" cx="-192" cy="-192" r="10"/>
-	<circle fill="#0000FF" cx="-233" cy="-300" r="10"/>
-	<circle fill="#0000FF" cx="-182" cy="-269" r="10"/>
-	<circle fill="#0000FF" cx="-117" cy="-355" r="10"/>
-	<circle fill="#0000FF" cx="-107" cy="-232" r="10"/>
-	<circle fill="#0000FF" cx="-97" cy="-300" r="10"/>
-	<circle fill="#0000FF" cx="27" cy="-345" r="10"/>
-	<circle fill="#0000FF" cx="-23" cy="-237" r="10"/>
-	<circle fill="#0000FF" cx="94" cy="-326" r="10"/>
-	<circle fill="#0000FF" cx="56" cy="-249" r="10"/>
-	<circle fill="#0000FF" cx="221" cy="-326" r="10"/>
-	<circle fill="#0000FF" cx="139" cy="-249" r="10"/>
-	<circle fill="#0000FF" cx="241" cy="-237" r="10"/>
-	<circle fill="#0000FF" cx="296" cy="-316" r="10"/>
-	<circle fill="#0000FF" cx="349" cy="-249" r="10"/>
-	<circle fill="#0000FF" cx="108" cy="-202" r="10"/>
-	<circle fill="#0000FF" cx="292" cy="-212" r="10"/>
-	<circle fill="#0000FF" cx="457" cy="-222" r="10"/>
-	<circle fill="#0000FF" cx="407" cy="-172" r="10"/>
-	<circle fill="#0000FF" cx="457" cy="-192" r="10"/>
+	<circle fill="#0000FF" cx="13" cy="-80" r="10"/>
+	<circle fill="#0000FF" cx="50" cy="-53" r="10"/>
+	<circle fill="#0000FF" cx="18" cy="-33" r="10"/>
+	<circle fill="#0000FF" cx="76" cy="-100" r="10"/>
+	<circle fill="#0000FF" cx="86" cy="-13" r="10"/>
+	<circle fill="#0000FF" cx="130" cy="-85" r="10"/>
+	<circle fill="#0000FF" cx="120" cy="-157" r="10"/>
+	<circle fill="#0000FF" cx="140" cy="-23" r="10"/>
+	<circle fill="#0000FF" cx="222" cy="-23" r="10"/>
+	<circle fill="#0000FF" cx="181" cy="-131" r="10"/>
+	<circle fill="#0000FF" cx="232" cy="-100" r="10"/>
+	<circle fill="#0000FF" cx="297" cy="-186" r="10"/>
+	<circle fill="#0000FF" cx="307" cy="-63" r="10"/>
+	<circle fill="#0000FF" cx="317" cy="-131" r="10"/>
+	<circle fill="#0000FF" cx="441" cy="-176" r="10"/>
+	<circle fill="#0000FF" cx="391" cy="-68" r="10"/>
+	<circle fill="#0000FF" cx="508" cy="-157" r="10"/>
+	<circle fill="#0000FF" cx="470" cy="-80" r="10"/>
+	<circle fill="#0000FF" cx="635" cy="-157" r="10"/>
+	<circle fill="#0000FF" cx="553" cy="-80" r="10"/>
+	<circle fill="#0000FF" cx="655" cy="-68" r="10"/>
+	<circle fill="#0000FF" cx="710" cy="-147" r="10"/>
+	<circle fill="#0000FF" cx="763" cy="-80" r="10"/>
+	<circle fill="#0000FF" cx="522" cy="-33" r="10"/>
+	<circle fill="#0000FF" cx="706" cy="-43" r="10"/>
+	<circle fill="#0000FF" cx="871" cy="-53" r="10"/>
+	<circle fill="#0000FF" cx="821" cy="-3" r="10"/>
+	<circle fill="#0000FF" cx="871" cy="-23" r="10"/>
 </g>
 </svg>

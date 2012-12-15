@@ -19,8 +19,7 @@ $( document ).ready( function()	{
 		return;
 	}
 	var app = new Application();
-	app.init();
-
+	app.load();
 });
 
 // Main Application
@@ -34,6 +33,17 @@ var Application = ( function()
 		this.skyColor = 0xff00ff;
 	}
 	Application.prototype.constructor = Application;
+
+	Application.prototype.load = function load()
+	{
+		this.projectLoader = new ProjectLoader();
+		this.projectLoader.signalLoaded.addOnce( this.onProjectLoaded, this );
+	}
+
+	Application.prototype.onProjectLoaded = function onProjectLoaded()
+	{
+		this.init();
+	}
 
 	Application.prototype.init = function init()
 	{
@@ -59,7 +69,7 @@ var Application = ( function()
 		this.scene = new THREE.Scene();
 
 		// Camera
-		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
+		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 250 );
 		this.camera.position.z = -60;
 		this.camera.position.y = 30;
 		this.camera.rotation.x = -Math.PI * .1;
@@ -110,6 +120,9 @@ var Application = ( function()
 
 	Application.prototype.createObjects = function createObjects()
 	{
+		this.decors = new Decors( this.svgReader.data[ "decors" ] );
+		this.scene.add( this.decors );
+
 		this.star = new Star();
 		this.scene.add( this.star );
 		this.star.add( this.camera );
@@ -131,6 +144,8 @@ var Application = ( function()
 			if( dataPath[ i ].cmd == "M" )
 			{
 				this.path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
+				this.star.position.x = dataPath[ i ].p.x;
+				this.star.position.z = dataPath[ i ].p.y;
 			}
 			else
 			{
