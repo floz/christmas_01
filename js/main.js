@@ -222,7 +222,6 @@ var Application = ( function()
 			}
 			else if ( this.part == 2 )
 			{
-				console.log( "part 2" );
 				if( this.timeOnPath > 1 )
 				{
 					this.part = 3;
@@ -231,7 +230,7 @@ var Application = ( function()
 				}
 				
 				p = this.pathEnd.getPointAt( this.timeOnPath );
-				yStar = this.currentStarY + ( this.timeOnPath * this.timeOnPath ) * ( Globals.sapinBig.position.y + 420 );
+				yStar = this.currentStarY + ( this.timeOnPath * this.timeOnPath ) * ( Globals.sapinBig.position.y + 415 );
 				console.log( this.timeOnPath );
 			}
 			this.star.render( p, yStar );
