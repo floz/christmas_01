@@ -43,7 +43,7 @@ Star = ( function Star() {
 		var nry = -rad + Math.PI * .5;
 		//this.mesh.rotation.z += ( nry - this.mesh.rotation.z ) * .1;		
 		this.rotation.y += ( nry - this.rotation.y ) * .1;
-		console.log( this.rotation.y );
+		//console.log( this.rotation.y );
 		
 		this.position.x = p.x;
 		this.position.z = p.y;

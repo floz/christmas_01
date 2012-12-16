@@ -48,7 +48,7 @@ var Application = ( function()
 	Application.prototype.init = function init()
 	{
 		this.timeOnPath = 0;
-		this.speed = 0.06;//0.0025;
+		this.speed = 0.0125;
 		this.acc = 0.00005;
 		this.speedMax = 0.06;//0.06;
 		this.part = 1;
@@ -131,48 +131,20 @@ var Application = ( function()
 		//this.camera.position.y = 200;
 		//this.camera.rotation.x = -Math.PI * .5;
 
-		this.line = new Line();
-		this.scene.add( this.line );
-
 		this.ribbons = new Ribbons( this.star );
 		this.scene.add( this.ribbons );
+
+		this.messageEnd = new MessageEnd( this.svgReader.data[ "message" ] );
+		this.messageEnd.create();
 	}
 
 	Application.prototype.createPaths = function createPaths()
 	{
-		this.path = new THREE.Shape();
-		this.createPath( this.path, this.svgReader.data[ "path" ], true );
+		this.path = new THREE.Path();
+		U3D.createPath( this.path, this.svgReader.data[ "path" ], this.star );
 
-		this.pathEnd = new THREE.Shape();
-		this.createPath( this.pathEnd, this.svgReader.data[ "pathend" ], false, Globals.sapinBig.position.x - 23.5 );
-	}
-
-	Application.prototype.createPath = function createPath( path, dataPath, init, specialEnd )
-	{
-		init = init || false;
-
-		var n = dataPath.length;
-		for( var i = 0; i < n; i++ )
-		{
-			if( dataPath[ i ].cmd == "M" )
-			{
-				path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
-				if( init == true )
-				{
-					this.star.position.x = dataPath[ i ].p.x;
-					this.star.position.z = dataPath[ i ].p.y;
-					this.star.position.y = U3D.getY( this.star.position );
-				}
-			}
-			else
-			{
-				// petit tweak parce que trop chiant le callage de fin sinon
-				if( i == n - 1 )
-					dataPath[ i ].p.x = specialEnd || dataPath[ i ].p.x;
-
-				path.bezierCurveTo( dataPath[ i ].cp0.x, dataPath[ i ].cp0.y, dataPath[ i ].cp1.x, dataPath[ i ].cp1.y, dataPath[ i ].p.x, dataPath[ i ].p.y );
-			}
-		}
+		this.pathEnd = new THREE.Path();
+		U3D.createPath( this.pathEnd, this.svgReader.data[ "pathend" ], null, Globals.sapinBig.position.x - 23.5 );
 	}
 
 	Application.prototype.animate = function animate()
@@ -215,6 +187,7 @@ var Application = ( function()
 					this.speed *= 3;
 					this.speedMax *= 3;
 					this.currentStarY = this.star.position.y;
+					this.scene.add( this.messageEnd );
 					return;
 				}
 
@@ -231,15 +204,20 @@ var Application = ( function()
 				
 				p = this.pathEnd.getPointAt( this.timeOnPath );
 				yStar = this.currentStarY + ( this.timeOnPath * this.timeOnPath ) * ( Globals.sapinBig.position.y + 415 );
-				console.log( this.timeOnPath );
 			}
 			this.star.render( p, yStar );
-			this.line.render( p );
 			this.ribbons.render( p );
 		}
 		else if ( this.part == 3 )
 		{
-			this.star.rotation.y += .01;
+			// debug message end
+			p = this.pathEnd.getPointAt( 1 )
+			this.ribbons.render( p );
+			this.star.position.x = p.x;
+			this.star.position.z = p.y;
+			this.star.position.y = ( Globals.sapinBig.position.y + 415 );
+			this.star.rotation.x = -0.7;
+			this.star.rotation.y = Math.PI;
 		}
 
 		//this.star.rotation.y += .01;
