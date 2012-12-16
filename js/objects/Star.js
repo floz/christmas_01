@@ -4,7 +4,7 @@ Star = ( function Star() {
 	{
 		THREE.Object3D.call( this );
 
-		var materials = [ new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } )
+		var materials = [ new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors  } )
 						, new THREE.MeshLambertMaterial( { color: 0x071846, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, wireframe: true, transparent: true, opacity: .4 } ) ];
 		this.mesh = THREE.SceneUtils.createMultiMaterialObject( Globals.objs.star.children[ 0 ].geometry, materials );//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } ) );
 		this.mesh.rotation.x = -1.3;

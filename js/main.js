@@ -53,19 +53,6 @@ var Application = ( function()
 		this.speedMax = 0.06;//0.06;
 		this.part = 1;
 
-		// Renderer
-		this.renderer = new THREE.WebGLRenderer({
-			  antialias: true
-			, preserveDrawingBuffer: true
-			, clearColor: this.skyColor
-			, clearAlpha: 1
-		});
-		this.renderer.setFaceCulling( 0 );
-		this.renderer.setSize( window.innerWidth, window.innerHeight );
-		this.renderer.clear();
-		this.renderer.autoClear = false;
-		this.domContainer.append( this.renderer.domElement );
-
 		// Scene
 		this.scene = new THREE.Scene();
 		this.scene.fog = new THREE.Fog( this.skyColor, 160, 500 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
@@ -77,21 +64,42 @@ var Application = ( function()
 		//this.camera.rotation.x = -Math.PI * .1;
 		//this.scene.add( this.camera );
 
-		this.createLights();
-		this.createExperiment();
+		// Renderer
+		this.renderer = new THREE.WebGLRenderer({
+			  antialias: true
+			, preserveDrawingBuffer: true
+			, clearColor: this.skyColor
+			, clearAlpha: 1
+		});
+		//this.renderer.setFaceCulling( 0 );
+		this.renderer.setSize( window.innerWidth, window.innerHeight );
+		this.renderer.autoClear = false;
+		this.renderer.gammaInput = true;
+		this.renderer.gammaOutput = true;
+		this.renderer.clear();
+		this.domContainer.append( this.renderer.domElement );
 
 		// Composer
-
 		var renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
 		var renderTarget = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, renderTargetParameters );
 		this.composer = new THREE.EffectComposer( this.renderer, renderTarget );
 
 		var renderPass = new THREE.RenderPass( this.scene, this.camera );
-		renderPass.renderToScreen = true;
-		var bloomPass = new THREE.BloomPass( .6 );
+		var bloomPass = new THREE.BloomPass( .6, 20, 4, 128 );
+		var filmPass = new THREE.ShaderPass( THREE.VignetteShader );
+		var effectBleach = new THREE.ShaderPass( THREE.BleachBypassShader );
+		effectBleach.uniforms[ "opacity" ].value = .2;
+		effectBleach.renderToScreen = true;
+
 
 		this.composer.addPass( renderPass );
-		//this.composer.addPass( bloomPass );
+		this.composer.addPass( bloomPass );
+		this.composer.addPass( filmPass );
+		this.composer.addPass( effectBleach );
+
+		// XP
+		this.createLights();
+		this.createExperiment();
 
 		// Stats
 		this.stats = new Stats();
@@ -106,7 +114,7 @@ var Application = ( function()
 	{
 		var map = $( "#heightmap" );
 		
-		this.mainLight = new THREE.PointLight( 0xffffff, 1.2, 2000 );
+		this.mainLight = new THREE.PointLight( 0xffffff, .9, 2000 );
 		this.mainLight.position.set( map.width() * 5, 950, -map.height() * 5 );
 		this.scene.add( this.mainLight );
 
@@ -190,6 +198,7 @@ var Application = ( function()
 	Application.prototype.render = function render()
 	{
 		//this.renderer.setClearColor( this.skyColor, 1 );
+		//this.renderer.clear();
 		//this.renderer.render( this.scene, this.camera );
 		
 		if( this.speed < this.speedMax )

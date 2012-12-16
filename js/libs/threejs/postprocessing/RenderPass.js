@@ -19,6 +19,8 @@ THREE.RenderPass = function ( scene, camera, overrideMaterial, clearColor, clear
 	this.clear = true;
 	this.needsSwap = false;
 
+	this.renderToScreen = false;
+
 };
 
 THREE.RenderPass.prototype = {

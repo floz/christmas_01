@@ -10,7 +10,7 @@ THREE.BleachBypassShader = {
 
 	uniforms: {
 
-		"tDiffuse": { type: "t", value: null },
+		"tDiffuse": { type: "t", value: 0 },
 		"opacity":  { type: "f", value: 1.0 }
 
 	},
