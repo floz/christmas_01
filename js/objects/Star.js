@@ -31,7 +31,7 @@ Star = ( function Star() {
 	Star.prototype = new THREE.Object3D();
 	Star.prototype.constructor = new THREE.Object3D();
 
-	Star.prototype.render = function render( p )
+	Star.prototype.render = function render( p, py )
 	{
 		if( this.mesh == null )
 			return;
@@ -47,7 +47,8 @@ Star = ( function Star() {
 		
 		this.position.x = p.x;
 		this.position.z = p.y;
-		this.position.y += ( ( U3D.getY( this.position ) + 5 ) - this.position.y ) * .1;
+		py = py || this.position.y + ( ( U3D.getY( this.position ) + 5 ) - this.position.y ) * .1;
+		this.position.y = py;
 	}
 
 	return Star;

@@ -48,9 +48,10 @@ var Application = ( function()
 	Application.prototype.init = function init()
 	{
 		this.timeOnPath = 0;
-		this.speed = 0.0025;
+		this.speed = 0.06;//0.0025;
 		this.acc = 0.00005;
-		this.speedMax = 0.06;
+		this.speedMax = 0.06;//0.06;
+		this.part = 1;
 
 		// Renderer
 		this.renderer = new THREE.WebGLRenderer({
@@ -109,7 +110,7 @@ var Application = ( function()
 
 		this.createFloor();
 		this.createObjects();
-		this.createPath();
+		this.createPaths();
 	}
 
 	Application.prototype.createFloor = function createFloor()
@@ -137,23 +138,39 @@ var Application = ( function()
 		this.scene.add( this.ribbons );
 	}
 
-	Application.prototype.createPath = function createPath()
+	Application.prototype.createPaths = function createPaths()
 	{
 		this.path = new THREE.Shape();
-		var dataPath = this.svgReader.data[ "path" ];
-		for( var i = 0; i < dataPath.length; i++ )
+		this.createPath( this.path, this.svgReader.data[ "path" ], true );
+
+		this.pathEnd = new THREE.Shape();
+		this.createPath( this.pathEnd, this.svgReader.data[ "pathend" ], false, Globals.sapinBig.position.x - 23.5 );
+	}
+
+	Application.prototype.createPath = function createPath( path, dataPath, init, specialEnd )
+	{
+		init = init || false;
+
+		var n = dataPath.length;
+		for( var i = 0; i < n; i++ )
 		{
 			if( dataPath[ i ].cmd == "M" )
 			{
-				this.path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
-				this.star.position.x = dataPath[ i ].p.x;
-				this.star.position.z = dataPath[ i ].p.y;
-				this.star.position.y = U3D.getY( this.star.position );
-				console.log( dataPath[ i ].p.x, dataPath[ i ].p.y );
+				path.moveTo( dataPath[ i ].p.x, dataPath[ i ].p.y );
+				if( init == true )
+				{
+					this.star.position.x = dataPath[ i ].p.x;
+					this.star.position.z = dataPath[ i ].p.y;
+					this.star.position.y = U3D.getY( this.star.position );
+				}
 			}
 			else
 			{
-				this.path.bezierCurveTo( dataPath[ i ].cp0.x, dataPath[ i ].cp0.y, dataPath[ i ].cp1.x, dataPath[ i ].cp1.y, dataPath[ i ].p.x, dataPath[ i ].p.y );
+				// petit tweak parce que trop chiant le callage de fin sinon
+				if( i == n - 1 )
+					dataPath[ i ].p.x = specialEnd || dataPath[ i ].p.x;
+
+				path.bezierCurveTo( dataPath[ i ].cp0.x, dataPath[ i ].cp0.y, dataPath[ i ].cp1.x, dataPath[ i ].cp1.y, dataPath[ i ].p.x, dataPath[ i ].p.y );
 			}
 		}
 	}
@@ -173,14 +190,58 @@ var Application = ( function()
 			this.speed += this.acc;
 		}
 
-		this.timeOnPath += this.speed * Globals.clock.getDelta();
-		if( this.timeOnPath > 1 )
-			return;
+		/*this.star.position.x = Globals.sapinBig.position.x - 23.5;
+		this.star.position.y = Globals.sapinBig.position.y + 420;
+		this.star.position.z = Globals.sapinBig.position.z;
+		this.star.rotation.x = -Math.PI * .2;*/
 
-		var p = this.path.getPointAt( this.timeOnPath );
-		this.star.render( p );
-		this.line.render( p );
-		this.ribbons.render( p );
+		/*this.star.position.x = Globals.sapinBig.position.x - 23.5 + 210;
+		this.star.position.y = Globals.sapinBig.position.y + 120;
+		this.star.position.z = Globals.sapinBig.position.z;
+		this.star.rotation.y = -Math.PI * .05;*/
+
+		if( this.part == 1 || this.part == 2 )
+		{
+			this.timeOnPath += this.speed * Globals.clock.getDelta();
+
+			var p
+			  , yStar;
+			if( this.part == 1 )
+			{
+				if( this.timeOnPath > 1 )
+				{
+					this.part = 2;
+					this.timeOnPath = 0;
+					this.speed *= 3;
+					this.speedMax *= 3;
+					this.currentStarY = this.star.position.y;
+					return;
+				}
+
+				p = this.path.getPointAt( this.timeOnPath );
+			}
+			else if ( this.part == 2 )
+			{
+				console.log( "part 2" );
+				if( this.timeOnPath > 1 )
+				{
+					this.part = 3;
+					this.timeOnPath = 0;
+					return;
+				}
+				
+				p = this.pathEnd.getPointAt( this.timeOnPath );
+				yStar = this.currentStarY + ( this.timeOnPath * this.timeOnPath ) * ( Globals.sapinBig.position.y + 420 );
+				console.log( this.timeOnPath );
+			}
+			this.star.render( p, yStar );
+			this.line.render( p );
+			this.ribbons.render( p );
+		}
+		else if ( this.part == 3 )
+		{
+			this.star.rotation.y += .01;
+		}
 
 		//this.star.rotation.y += .01;
 
@@ -197,6 +258,13 @@ var Application = ( function()
 		this.camera.lookAt( this.star.position );*/
 
 		this.stats.update();
+	}
+
+	Application.prototype.preparePart2 = function preparePart2()
+	{
+		var p = this.path.getPointAt( 1 );
+		this.star.position.x = p.x;
+		this.star.position.z = p.y;
 	}
 
 	return Application;

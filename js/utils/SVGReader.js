@@ -27,6 +27,8 @@ SVGReader = ( function() {
 					case "g": 
 						if( node.attributes[ 0 ].nodeValue == "path" )
 							this.data[ "path" ] = this._parsePathNode( node ); 
+						else if( node.attributes[ 0 ].nodeValue == "pathend" )
+							this.data[ "pathend" ] = this._parsePathNode( node ); 
 						else if( node.attributes[ 0 ].nodeValue == "decors" )
 							this.data[ "decors" ] = this._parseDecorsNode( node );
 						else if( node.attributes[ 0 ].nodeValue == "zone" )

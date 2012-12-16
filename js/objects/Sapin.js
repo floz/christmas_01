@@ -14,6 +14,10 @@ Sapin = ( function Sapin() {
 			this.scale.y = s;
 			this.scale.z = s;
 		}
+		else
+		{
+			Globals.sapinBig = this;
+		}
 		this.add( this.mesh );
 
 		//var idx = ( this.position.x + this.position.z ) * .1 >> 0;
