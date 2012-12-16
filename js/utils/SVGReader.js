@@ -56,7 +56,6 @@ SVGReader = ( function() {
 
 			aPath = this._parsePathNode( node );
 		}
-		console.log( aPath );
 		return aPath;
 	}
 

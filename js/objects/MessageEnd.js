@@ -14,7 +14,7 @@ MessageEnd = ( function MessageEnd() {
 
 	MessageEnd.prototype.create = function create()
 	{
-		var mat = new THREE.LineBasicMaterial( { color: 0xff0000, lineWidth: 2 } );
+		var mat = new THREE.LineBasicMaterial( { color: 0xff0000, lineWidth: 25 } );
 
 		var letter;
 		var n = this.data.a.length;
@@ -54,7 +54,6 @@ Letter = ( function Letter() {
 			line = new THREE.Line( geo, mat );
 			this.add( line );
 		}
-		console.log( this );
 	}
 	Letter.prototype = new THREE.Object3D();
 	Letter.prototype.constructor = Letter;

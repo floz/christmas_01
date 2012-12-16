@@ -11,8 +11,11 @@ Floor = ( function() {
 		this.heightMapH = heightMap.height();
 		var dataHeightMap = this.getHeightMapData( heightMap );
 		var geometry = this.createGeometryHeightMap( dataHeightMap, this.heightMapW, this.heightMapH );
-
-		this.mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } ) );
+		geometry.computeFaceNormals() ;
+		var materials = [ new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } )
+						, new THREE.MeshLambertMaterial( { color: 0x071846, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, wireframe: true, transparent: true, opacity: .25 } ) ];
+		this.mesh = THREE.SceneUtils.createMultiMaterialObject( geometry, materials );//new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } ) );//new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } ) );
+		this.mesh.receiveShadows = true;
 		this.add( this.mesh );
 
 		this.position.x = this.data.w * .5 + this.data.x;
@@ -50,7 +53,7 @@ Floor = ( function() {
 		var geometry = new THREE.PlaneGeometry( this.data.w, this.data.h, this.heightMapW - 1, this.heightMapH - 1 );
 		var vertices = geometry.vertices;
 		for( var i = 0; i < vertices.length; i++ )
-			vertices[ i ].z = data[ i ];
+			vertices[ i ].z = data[ i ] + Math.random() * 3 - 1.5;
 		
 		return geometry;
 	}

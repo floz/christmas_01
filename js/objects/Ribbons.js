@@ -5,15 +5,14 @@ Ribbons = ( function Ribbons() {
 		THREE.Object3D.call( this );
 
 		this.target = target;
-		console.log( this.target );
 
 		this.ribbons = [];
-		var data = [ { x: 0, y: 0, z: 0, color: 0xFFFF00, opacity: 1, radius: 1 }
-				   , { x: 0, y: 0, z: -2, color: 0xCECE24, opacity: 1, radius: .8 }
-				   , { x: .2, y: -.2, z: 0, color: 0xEAC23F, opacity: .8, radius: 1.1 }
-				   , { x: -.5, y: -.2, z: 0, color: 0xEAC23F, opacity: .7, radius: .6 }
-				   , { x: .5, y: -.1, z: 2, color: 0xEAC23F, opacity: .5, radius: 1 }
-				   , { x: .2, y: -.5, z: -1, color: 0xEAC23F, opacity: .6, radius: .9 } ];
+		var data = [ { x: 0, y: 0, z: 0, color: 0xe31214, opacity: .4, radius: 1 }
+				   , { x: 0, y: 0, z: -2, color: 0xe31214, opacity: .8, radius: .8 }
+				   , { x: .2, y: -.2, z: 0, color: 0xe31214, opacity: .8, radius: 1.1 }
+				   , { x: -.5, y: -.2, z: 0, color: 0xe4206c, opacity: .7, radius: .6 }
+				   , { x: .5, y: -.1, z: 2, color: 0xe31214, opacity: .5, radius: 1 }
+				   , { x: .2, y: -.5, z: -1, color: 0xe4206c, opacity: .6, radius: .9 } ];
 		var ribbon;
 		var n = data.length;
 		for( var i = 0; i < n; i++ )
@@ -30,7 +29,7 @@ Ribbons = ( function Ribbons() {
 	Ribbons.prototype.render = function render( p )
 	{
 		this.position.y = this.target.position.y;
-		
+
 		var n = this.ribbons.length;
 		for( var i = 0; i < n; i++ )
 		{

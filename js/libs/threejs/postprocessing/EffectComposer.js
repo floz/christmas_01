@@ -56,7 +56,6 @@ THREE.EffectComposer.prototype = {
 		var maskActive = false;
 
 		var pass, i, il = this.passes.length;
-
 		for ( i = 0; i < il; i ++ ) {
 
 			pass = this.passes[ i ];

@@ -15,7 +15,6 @@ Decors = ( function Decors(){
 		  , n = data.length;
 		for( var i = 0; i < n; i++ )
 		{
-			console.log( data[ i ].c );
 			sapin = new Sapin( Globals.objs[ map[ data[ i ].c ] ].children[ 0 ], data[ i ] );
 			this.add( sapin );
 		}
