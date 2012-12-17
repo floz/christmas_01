@@ -47,18 +47,22 @@ var Application = ( function()
 
 	Application.prototype.init = function init()
 	{
+		this.MARGIN = 120;
+		window.addEventListener( 'resize', this.onWindowResize.bind( this ), false );
+		this.onWindowResize();
+
 		this.timeOnPath = 0;
-		this.speed = 0.0125;
+		this.speed = 0.0325;
 		this.acc = 0.00005;
 		this.speedMax = 0.06;//0.06;
 		this.part = 1;
 
 		// Scene
 		this.scene = new THREE.Scene();
-		this.scene.fog = new THREE.Fog( this.skyColor, 160, 500 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
+		this.scene.fog = new THREE.Fog( this.skyColor, 160, 350 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
 
 		// Camera
-		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 25000 );
+		this.camera = new THREE.PerspectiveCamera( 60, this.WIDTH / this.HEIGHT, 1, 400 );
 		this.camera.position.z = -60;
 		this.camera.position.y = 30;
 		//this.camera.rotation.x = -Math.PI * .1;
@@ -72,7 +76,7 @@ var Application = ( function()
 			, clearAlpha: 1
 		});
 		//this.renderer.setFaceCulling( 0 );
-		this.renderer.setSize( window.innerWidth, window.innerHeight );
+		this.renderer.setSize( this.WIDTH, this.HEIGHT );
 		this.renderer.autoClear = false;
 		this.renderer.gammaInput = true;
 		this.renderer.gammaOutput = true;
@@ -81,7 +85,7 @@ var Application = ( function()
 
 		// Composer
 		var renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
-		var renderTarget = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, renderTargetParameters );
+		var renderTarget = new THREE.WebGLRenderTarget( this.WIDTH, this.HEIGHT, renderTargetParameters );
 		this.composer = new THREE.EffectComposer( this.renderer, renderTarget );
 
 		var renderPass = new THREE.RenderPass( this.scene, this.camera );
@@ -118,10 +122,6 @@ var Application = ( function()
 		this.mainLight.position.set( map.width() * 5, 950, -map.height() * 5 );
 		this.scene.add( this.mainLight );
 
-		/*this.secondLight = new THREE.PointLight( 0xffffff, .75, 2000 );
-		this.secondLight.position.set( map.width() * 5, 950, -map.height() * 2.5 );
-		this.scene.add( this.secondLight );*/
-
 		this.saumonLight = new THREE.PointLight( 0xd8aed6, .4 );
 		this.saumonLight.position.set( map.width() * .75 * 10, 200, 0 );
 		this.scene.add( this.saumonLight );
@@ -137,7 +137,6 @@ var Application = ( function()
 		this.scene.add( whiteLightStar );
 
 		this.scene.add( new THREE.AmbientLight( 0x10111f ) );
-		//this.scene.add( new THREE.AmbientLight( 0xffffff ) );
 	}
 
 	Application.prototype.createExperiment = function createExperiment()
@@ -231,7 +230,7 @@ var Application = ( function()
 					this.speed *= 3;
 					this.speedMax *= 3;
 					this.currentStarY = this.star.position.y;
-					this.scene.add( this.messageEnd );
+					//this.scene.add( this.messageEnd );
 					return;
 				}
 
@@ -243,7 +242,14 @@ var Application = ( function()
 				{
 					this.part = 3;
 					this.timeOnPath = 0;
-					this.scene.fog = new THREE.Fog( this.skyColor, 500, 700 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
+
+					this.scene.fog = new THREE.Fog( this.skyColor, 400, 700 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
+					this.camera.far = 750;
+					this.camera.updateProjectionMatrix();
+
+					this.scene.add( this.messageEnd );
+					this.messageEnd.position.y = 40;
+					this.messageEnd.play();
 					return;
 				}
 				
@@ -284,11 +290,18 @@ var Application = ( function()
 		this.stats.update();
 	}
 
-	Application.prototype.preparePart2 = function preparePart2()
+	Application.prototype.onWindowResize = function onWindowResize()
 	{
-		var p = this.path.getPointAt( 1 );
-		this.star.position.x = p.x;
-		this.star.position.z = p.y;
+		this.WIDTH = window.innerWidth;
+		this.HEIGHT = window.innerHeight - this.MARGIN * 2;
+
+		if( this.renderer == null )
+			return;
+
+		this.renderer.setSize( this.WIDTH, this.HEIGHT );
+
+		this.camera.aspect = this.WIDTH / this.HEIGHT;
+		this.camera.updateProjectionMatrix();
 	}
 
 	return Application;

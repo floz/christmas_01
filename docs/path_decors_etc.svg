@@ -33,56 +33,56 @@
 	<text transform="matrix(0.8577 -0.5142 0.5142 0.8577 643.4062 -169.0728)" font-family="'Handwriting-Dakota'" font-size="120"> </text>
 	<text transform="matrix(0.8577 -0.5142 0.5142 0.8577 687.5381 -147.2227)" font-family="'Handwriting-Dakota'" font-size="120">!</text>
 </g>
-<g id="path" display="none">
-	<path display="inline" fill="none" stroke="#00F900" stroke-miterlimit="10" d="M42-160c0,0,74.957-43.494,88.669-93.092
+<g id="path">
+	<path fill="none" stroke="#00F900" stroke-miterlimit="10" d="M42-160c0,0,74.957-43.494,88.669-93.092
 		c0.542-1.96,0.988-3.93,1.331-5.908c9-52,27-93.752,57-86.376c0,0,19-1.624,44,29.376c0,0,42,36,63-36c0,0,41-106,137-72
 		c0,0,75,78-61,99c0,0-61,16-17,49c0,0,49,33.276,146-19.362c0,0,70-31.638,84,10.362c0,0,7,33-31,64c0,0-46,47,68,33
 		c0,0,133-45,154.5,5c0,0,13,39.878-57.5,61.067"/>
 </g>
-<g id="decors" display="none">
-	<circle display="inline" fill="#FF0000" cx="52" cy="-208" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="157" cy="-235" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="108" cy="-304" r="8"/>
-	<circle display="inline" fill="#FF0000" cx="554" cy="-91" r="14"/>
-	<circle display="inline" fill="#FF0000" cx="206" cy="-407" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="186" cy="-314" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="310" cy="-314" r="12"/>
-	<circle display="inline" fill="#FF0000" cx="394" cy="-407" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="484" cy="-407" r="18"/>
-	<circle display="inline" fill="#FF0000" cx="326" cy="-252" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="404" cy="-304" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="322" cy="-431" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="562" cy="-326" r="8"/>
-	<circle display="inline" fill="#FF0000" cx="494" cy="-165" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="552" cy="-267" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="681" cy="-231" r="10"/>
-	<circle display="inline" fill="#FF0000" cx="253" cy="-471" r="8"/>
-	<circle display="inline" fill="#FF0000" cx="253" cy="-345" r="8"/>
-	<circle display="inline" fill="#FF0000" cx="734" cy="-165" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="176" cy="-369" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="176" cy="-245" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="353" cy="-395" r="10"/>
-	<circle display="inline" fill="#0000FF" cx="298" cy="-419" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="603" cy="-296" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="455" cy="-241" r="10"/>
-	<circle display="inline" fill="#0000FF" cx="655" cy="-170" r="11"/>
-	<circle display="inline" fill="#FFFF00" cx="665" cy="-91" r="14"/>
-	<circle display="inline" fill="#FFFF00" cx="474" cy="-332" r="10"/>
-	<circle display="inline" fill="#FFFF00" cx="364" cy="-361" r="10"/>
-	<circle display="inline" fill="#FFFF00" cx="354" cy="-471" r="10"/>
-	<circle display="inline" fill="#FFFF00" cx="214" cy="-281" r="10"/>
-	<circle display="inline" fill="#FFFF00" cx="334" cy="-181" r="10"/>
-	<circle display="inline" fill="#0000FF" cx="505" cy="-271" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="355" cy="-221" r="8"/>
-	<circle display="inline" fill="#0000FF" cx="255" cy="-381" r="12"/>
-	<circle display="inline" fill="#FFFF00" cx="265" cy="-271" r="10"/>
-	<circle display="inline" fill="#00FF00" cx="365" cy="-291" r="10"/>
-	<circle display="inline" fill="#00FF00" cx="405" cy="-461" r="10"/>
-	<circle display="inline" fill="#FFFF00" cx="575" cy="-212" r="10"/>
-	<circle display="inline" fill="#FF00FF" cx="354" cy="-82" r="14"/>
-	<circle display="inline" fill="#0000FF" cx="734" cy="-191" r="8"/>
-	<circle display="inline" fill="#FFFF00" cx="734" cy="-232" r="15"/>
-	<circle display="inline" fill="#00FF00" cx="621" cy="-170" r="9"/>
+<g id="decors">
+	<circle fill="#FF0000" cx="52" cy="-208" r="10"/>
+	<circle fill="#FF0000" cx="157" cy="-235" r="10"/>
+	<circle fill="#FF0000" cx="108" cy="-304" r="8"/>
+	<circle fill="#FF0000" cx="554" cy="-91" r="14"/>
+	<circle fill="#FF0000" cx="206" cy="-407" r="10"/>
+	<circle fill="#FF0000" cx="186" cy="-314" r="10"/>
+	<circle fill="#FF0000" cx="310" cy="-314" r="12"/>
+	<circle fill="#FF0000" cx="394" cy="-407" r="10"/>
+	<circle fill="#FF0000" cx="484" cy="-407" r="18"/>
+	<circle fill="#FF0000" cx="326" cy="-252" r="10"/>
+	<circle fill="#FF0000" cx="404" cy="-304" r="10"/>
+	<circle fill="#FF0000" cx="322" cy="-431" r="10"/>
+	<circle fill="#FF0000" cx="562" cy="-326" r="8"/>
+	<circle fill="#FF0000" cx="494" cy="-165" r="10"/>
+	<circle fill="#FF0000" cx="552" cy="-267" r="10"/>
+	<circle fill="#FF0000" cx="681" cy="-231" r="10"/>
+	<circle fill="#FF0000" cx="253" cy="-471" r="8"/>
+	<circle fill="#FF0000" cx="253" cy="-345" r="8"/>
+	<circle fill="#FF0000" cx="734" cy="-165" r="8"/>
+	<circle fill="#0000FF" cx="176" cy="-369" r="8"/>
+	<circle fill="#0000FF" cx="176" cy="-245" r="8"/>
+	<circle fill="#0000FF" cx="353" cy="-395" r="10"/>
+	<circle fill="#0000FF" cx="298" cy="-419" r="8"/>
+	<circle fill="#0000FF" cx="603" cy="-296" r="8"/>
+	<circle fill="#0000FF" cx="455" cy="-241" r="10"/>
+	<circle fill="#0000FF" cx="655" cy="-170" r="11"/>
+	<circle fill="#FFFF00" cx="665" cy="-91" r="14"/>
+	<circle fill="#FFFF00" cx="474" cy="-332" r="10"/>
+	<circle fill="#FFFF00" cx="364" cy="-361" r="10"/>
+	<circle fill="#FFFF00" cx="354" cy="-471" r="10"/>
+	<circle fill="#FFFF00" cx="214" cy="-281" r="10"/>
+	<circle fill="#FFFF00" cx="334" cy="-181" r="10"/>
+	<circle fill="#0000FF" cx="505" cy="-271" r="8"/>
+	<circle fill="#0000FF" cx="355" cy="-221" r="8"/>
+	<circle fill="#0000FF" cx="255" cy="-381" r="12"/>
+	<circle fill="#FFFF00" cx="265" cy="-271" r="10"/>
+	<circle fill="#00FF00" cx="365" cy="-291" r="10"/>
+	<circle fill="#00FF00" cx="405" cy="-461" r="10"/>
+	<circle fill="#FFFF00" cx="575" cy="-212" r="10"/>
+	<circle fill="#FF00FF" cx="354" cy="-82" r="14"/>
+	<circle fill="#0000FF" cx="734" cy="-191" r="8"/>
+	<circle fill="#FFFF00" cx="734" cy="-232" r="15"/>
+	<circle fill="#00FF00" cx="621" cy="-170" r="9"/>
 </g>
 <g id="zone">
 	<rect y="-540" fill="none" stroke="#FF8800" stroke-miterlimit="10" width="855" height="540"/>
