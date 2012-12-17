@@ -43,6 +43,7 @@ var Application = ( function()
 	Application.prototype.onProjectLoaded = function onProjectLoaded()
 	{
 		this.init();
+		document.addEventListener( 'mousemove', this.onDocumentMouseMove.bind( this ), false );
 	}
 
 	Application.prototype.init = function init()
@@ -57,14 +58,17 @@ var Application = ( function()
 		this.speedMax = 0.06;//0.06;
 		this.part = 1;
 
+		this.currentFogStart = 160;
+		this.currentFogEnd = 350;
+
 		// Scene
 		this.scene = new THREE.Scene();
-		this.scene.fog = new THREE.Fog( this.skyColor, 160, 350 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
+		this.scene.fog = new THREE.Fog( this.skyColor, this.currentFogStart, this.currentFogEnd );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
 
 		// Camera
 		this.camera = new THREE.PerspectiveCamera( 60, this.WIDTH / this.HEIGHT, 1, 400 );
 		this.camera.position.z = -60;
-		this.camera.position.y = 30;
+		this.camera.position.y = 40;
 		//this.camera.rotation.x = -Math.PI * .1;
 		//this.scene.add( this.camera );
 
@@ -162,15 +166,19 @@ var Application = ( function()
 
 		this.star = new Star();
 		this.scene.add( this.star );
-		this.star.add( this.camera );
+		//this.star.add( this.camera );
 		//this.scene.add( this.camera );
-		this.camera.lookAt( this.star.position );
 		//this.camera.lookAt( new THREE.Vector3( 400, 20, -250) );
 		//this.camera.position.y = 100;
 		//this.camera.position.z = 300;
 		//this.camera.rotation.y = -Math.PI * .5;
 		//this.camera.position.y = 200;
 		//this.camera.rotation.x = -Math.PI * .5;
+
+		this.cameraTarget = new CameraTarget( this.star );
+		this.cameraTarget.add( this.camera );
+		this.scene.add( this.cameraTarget );
+		this.camera.lookAt( this.cameraTarget.position );
 
 		this.ribbons = new Ribbons( this.star );
 		this.scene.add( this.ribbons );
@@ -186,6 +194,8 @@ var Application = ( function()
 
 		this.pathEnd = new THREE.Path();
 		U3D.createPath( this.pathEnd, this.svgReader.data[ "pathend" ], null, Globals.sapinBig.position.x - 23.5 );
+
+//		this.part = 3;
 	}
 
 	Application.prototype.animate = function animate()
@@ -219,7 +229,7 @@ var Application = ( function()
 		{
 			this.timeOnPath += this.speed * Globals.clock.getDelta();
 
-			var p
+			var p, percent
 			  , yStar;
 			if( this.part == 1 )
 			{
@@ -230,11 +240,13 @@ var Application = ( function()
 					this.speed *= 3;
 					this.speedMax *= 3;
 					this.currentStarY = this.star.position.y;
-					//this.scene.add( this.messageEnd );
+					this.deactivateMouse = true;
 					return;
 				}
 
+
 				p = this.path.getPointAt( this.timeOnPath );
+				//p2 = this.path.getPointAt( Math.min( 1, this.timeOnPath + .015 ) );
 			}
 			else if ( this.part == 2 )
 			{
@@ -243,7 +255,7 @@ var Application = ( function()
 					this.part = 3;
 					this.timeOnPath = 0;
 
-					this.scene.fog = new THREE.Fog( this.skyColor, 400, 700 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
+					//this.scene.fog = new THREE.Fog( this.skyColor, 400, 700 );//new THREE.FogExp2( 0xffffff, .003 );//( 0xffffff, 300, 800 );
 					this.camera.far = 750;
 					this.camera.updateProjectionMatrix();
 
@@ -254,21 +266,55 @@ var Application = ( function()
 				}
 				
 				p = this.pathEnd.getPointAt( this.timeOnPath );
-				yStar = this.currentStarY + ( this.timeOnPath * this.timeOnPath ) * ( Globals.sapinBig.position.y + 415 );
+				percent = this.timeOnPath;
+				yStar = this.currentStarY + ( this.timeOnPath * this.timeOnPath ) * ( Globals.sapinBig.position.y + 410 );
 			}
+			//this.cameraTarget.render( p2, yStar );
+			this.cameraTarget.render( yStar, percent );
 			this.star.render( p, yStar );
 			this.ribbons.render( p );
 		}
 		else if ( this.part == 3 )
 		{
-			// debug message end
 			p = this.pathEnd.getPointAt( 1 )
-			this.ribbons.render( p );
-			this.star.position.x = p.x;
-			this.star.position.z = p.y;
-			this.star.position.y = ( Globals.sapinBig.position.y + 415 );
-			this.star.rotation.x = -0.7;
-			this.star.rotation.y = Math.PI;
+			//this.cameraTarget.render( ( Globals.sapinBig.position.y + 410 ), 1 );
+
+			//this.cameraTarget.rotation.y += .01;
+			var drx = -.45 - this.cameraTarget.rotation.x;
+			this.cameraTarget.rotation.x += drx * .02;
+			var dry = Math.PI - this.cameraTarget.rotation.y;
+			this.cameraTarget.rotation.y += dry * .02;
+			var dz = p.y - 70 - this.cameraTarget.position.z;
+			this.cameraTarget.position.z += dz * .02;
+
+			if( this.currentFogStart < 399 || this.currentFogEnd < 699 )
+			{
+				this.currentFogStart += ( 400 - this.currentFogStart ) * .02;
+				this.currentFogEnd += ( 700 - this.currentFogEnd ) * .02;
+				this.scene.fog = new THREE.Fog( this.skyColor, this.currentFogStart, this.currentFogEnd );
+			}
+			//return;
+			/*var dx = p.x - this.cameraTarget.position.x;
+			var dy = ( Globals.sapinBig.position.y + 410 ) - this.cameraTarget.position.y;
+			this.cameraTarget.position.x += dx * .2;
+			this.cameraTarget.position.y += dy * .2;
+
+			
+
+			// debug message end
+			//this.ribbons.render( p );
+			//this.cameraTarget.rotation.x -= .01;
+			//this.star.rotation.x = -0.7;
+			//this.star.rotation.y = Math.PI;
+
+			/*
+			this.cameraTarget.rotation.y = Math.PI;
+			this.cameraTarget.position.x = p.x;
+			this.cameraTarget.position.z = p.y - 30;
+			this.cameraTarget.position.y = ( Globals.sapinBig.position.y + 410 );
+			this.cameraTarget.rotation.x = -.25;
+			console.log( this.cameraTarget.position, this.cameraTarget.rotation );
+			*/
 		}
 
 		//this.star.rotation.y += .01;
@@ -290,6 +336,25 @@ var Application = ( function()
 		this.stats.update();
 	}
 
+	Application.prototype.renderCamera = function renderCamera( p )
+	{
+		var rad = 50;
+		var px = p.x + rad * Math.cos( Math.PI * .5 );
+		var py = p.y + rad * Math.sin( Math.PI * .5 );
+
+
+		var dx = px - this.camera.position.x;
+		var dy = py - this.camera.position.z ;
+		var rad = Math.atan2( dy, dx );
+
+		this.camera.position.x += dx * .9;
+		this.camera.position.z += dy * .9;
+		//var nry = -rad + Math.PI * .5;
+		//this.camera.rotation.y += ( nry - this.camera.rotation.y ) * .08;
+
+		//this.camera.lookAt( this.star.position );
+	}
+
 	Application.prototype.onWindowResize = function onWindowResize()
 	{
 		this.WIDTH = window.innerWidth;
@@ -302,6 +367,26 @@ var Application = ( function()
 
 		this.camera.aspect = this.WIDTH / this.HEIGHT;
 		this.camera.updateProjectionMatrix();
+	}
+
+	Application.prototype.onDocumentMouseMove = function onDocumentMouseMove( event )
+	{
+		if( this.deactivateMouse == true )
+			return;
+
+		var percentX = event.clientX / this.WIDTH
+		  , percentY = event.clientY / this.HEIGHT;
+		if( this.part < 3 )
+		{
+			this.camera.position.y = 30 - percentY * 18;
+			this.camera.rotation.x = -2.6 - percentY * .3;
+
+			this.camera.position.z = -40 + percentX * 20;
+		}
+		else
+		{
+			this.camera.rotation.y = Math.PI;// + percentX * .02;
+		}
 	}
 
 	return Application;

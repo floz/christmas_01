@@ -30,6 +30,7 @@ Ribbons = ( function Ribbons() {
 	{
 		this.position.y = this.target.position.y;
 
+		var v = Math.sin( this.vFlow ) * 0.1;
 		var n = this.ribbons.length;
 		for( var i = 0; i < n; i++ )
 		{

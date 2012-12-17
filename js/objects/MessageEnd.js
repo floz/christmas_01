@@ -99,7 +99,7 @@ Letter = ( function Letter() {
 			cnt2.add( line );
 
 			line = new THREE.Line( geo, m3 );
-			line.position.x = 5;
+			line.position.x = -2;
 			line.position.y = 3;
 			cnt3.add( line );
 		}
