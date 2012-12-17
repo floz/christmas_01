@@ -18,7 +18,7 @@ $( document ).ready( function()	{
 		Detector.addGetWebGLMessage();
 		return;
 	}
-	var app = new Application();
+	var app = new Application(app);
 	app.load();
 });
 
@@ -30,7 +30,12 @@ var Application = ( function()
 	{
 		this.domContainer = $( "#container" );
 
+		this.MARGIN = 120;
+		$( "#loaderScreen" ).css( "margin-top", window.innerHeight * .5 - this.MARGIN - 100 + "px")
+
 		this.skyColor = 0x131422;
+		this.deactivateMouse = false;
+
 	}
 	Application.prototype.constructor = Application;
 
@@ -43,12 +48,36 @@ var Application = ( function()
 	Application.prototype.onProjectLoaded = function onProjectLoaded()
 	{
 		this.init();
-		document.addEventListener( 'mousemove', this.onDocumentMouseMove.bind( this ), false );
+		this.initSound();
+	}
+
+	Application.prototype.initSound = function initSound()
+	{
+		this.audio = new Audio();
+		this.audio.addEventListener('canplay', this.onCanPlay.bind( this ), false);
+
+		this.audio.src = 'mp3/m83_night.mp3';
+		this.audio.controls = false;
+		this.audio.autoplay = false;
+		document.body.appendChild(this.audio);
+		//this.audio = document.getElementById( "musicplayer" );
+		//this.audio.addEventListener('canplay', this.onCanPlay.bind( this ) );
+		//this.songPlayer = new SongPlayer();
+		//var song = this.songPlayer.addSong("Night", "m83","mp3/m83_night.mp3");
+		//song.load();
+		//this.songPlayer.events.songStarted.add(this.onSongStart.bind(this));
+		//this.songPlayer.events.songCompleted.add(this.onSongComplete.bind(this));
+		//this.songPlayer.playSong(0);
+	}
+
+	Application.prototype.onCanPlay = function onCanPlay()
+	{
+		$( "#loaderScreen" ).html( "CLICK TO PLAY" );
+		$( "#loaderScreen" ).click( this.start.bind( this ) );
 	}
 
 	Application.prototype.init = function init()
 	{
-		this.MARGIN = 120;
 		window.addEventListener( 'resize', this.onWindowResize.bind( this ), false );
 		this.onWindowResize();
 
@@ -110,12 +139,23 @@ var Application = ( function()
 		this.createExperiment();
 
 		// Stats
-		this.stats = new Stats();
+		/*this.stats = new Stats();
 		this.stats.domElement.style.position = "absolute";
 		this.stats.domElement.style.top = "0px";
-		container.appendChild( this.stats.domElement );
+		container.appendChild( this.stats.domElement );*/
 
+		this.part = 0;
 		this.animate();
+	}
+
+	Application.prototype.start = function start()
+	{
+		this.audio.play();
+		$( "#loaderScreen" ).css( "display", "none" );
+		this.camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+		this.part = 1;
+
+		document.addEventListener( "mousemove", this.onDocumentMouseMove.bind( this ), false );
 	}
 
 	Application.prototype.createLights = function createLights()
@@ -166,19 +206,11 @@ var Application = ( function()
 
 		this.star = new Star();
 		this.scene.add( this.star );
-		//this.star.add( this.camera );
-		//this.scene.add( this.camera );
-		//this.camera.lookAt( new THREE.Vector3( 400, 20, -250) );
-		//this.camera.position.y = 100;
-		//this.camera.position.z = 300;
-		//this.camera.rotation.y = -Math.PI * .5;
-		//this.camera.position.y = 200;
-		//this.camera.rotation.x = -Math.PI * .5;
 
 		this.cameraTarget = new CameraTarget( this.star );
 		this.cameraTarget.add( this.camera );
 		this.scene.add( this.cameraTarget );
-		this.camera.lookAt( this.cameraTarget.position );
+		this.camera.lookAt( this.saumonLight.position );
 
 		this.ribbons = new Ribbons( this.star );
 		this.scene.add( this.ribbons );
@@ -191,6 +223,8 @@ var Application = ( function()
 	{
 		this.path = new THREE.Path();
 		U3D.createPath( this.path, this.svgReader.data[ "path" ], this.star );
+		this.cameraTarget.position.x = this.path.getPointAt( 0 ).x;
+		this.cameraTarget.position.z = this.path.getPointAt( 0 ).y;
 
 		this.pathEnd = new THREE.Path();
 		U3D.createPath( this.pathEnd, this.svgReader.data[ "pathend" ], null, Globals.sapinBig.position.x - 23.5 );
@@ -209,11 +243,6 @@ var Application = ( function()
 		//this.renderer.setClearColor( this.skyColor, 1 );
 		//this.renderer.clear();
 		//this.renderer.render( this.scene, this.camera );
-		
-		if( this.speed < this.speedMax )
-		{
-			this.speed += this.acc;
-		}
 
 		/*this.star.position.x = Globals.sapinBig.position.x - 23.5;
 		this.star.position.y = Globals.sapinBig.position.y + 420;
@@ -227,6 +256,11 @@ var Application = ( function()
 		//return;
 		if( this.part == 1 || this.part == 2 )
 		{
+			if( this.speed < this.speedMax )
+			{
+				this.speed += this.acc;
+			}
+
 			this.timeOnPath += this.speed * Globals.clock.getDelta();
 
 			var p, percent
@@ -333,7 +367,7 @@ var Application = ( function()
 
 		this.composer.render( 0.1 );
 
-		this.stats.update();
+		//this.stats.update();
 	}
 
 	Application.prototype.renderCamera = function renderCamera( p )
